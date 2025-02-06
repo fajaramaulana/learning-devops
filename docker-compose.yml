@@ -1,0 +1,86 @@
+services:
+  jenkins-docker:
+    image: docker:dind
+    container_name: jenkins-docker
+    privileged: true
+    networks:
+      - jenkins
+    environment:
+      - DOCKER_TLS_CERTDIR=
+    volumes:
+      - jenkins-docker-certs:/certs/client
+      - jenkins-data:/var/jenkins_home
+    ports:
+      - "3000:3000"
+      - "5000:5000"
+      - "2376:2376"
+      - "2375:2375"
+    restart: always
+
+  jenkins-blueocean:
+    build:
+      context: ./jenkins
+      dockerfile: Dockerfile
+    container_name: jenkins-blueocean
+    depends_on:
+      - jenkins-docker
+    networks:
+      - jenkins
+    environment:
+      - DOCKER_HOST=tcp://jenkins-docker:2375
+      - DOCKER_CERT_PATH=/certs/client
+      - JAVA_OPTS=-Dhudson.plugins.git.GitSCM.ALLOW_LOCAL_CHECKOUT=true
+      - JENKINS_OPTS=--httpPort=8080 --prefix=/  # Pastikan prefix kosong
+      - JENKINS_JAVA_OPTIONS=-Djenkins.install.runSetupWizard=false -Djenkins.model.Jenkins.rootUrl=http://localhost:9000
+    volumes:
+      - jenkins-data:/var/jenkins_home
+      - jenkins-docker-certs:/certs/client:ro
+    ports:
+      - "49000:8080"
+      - "50000:50000"
+    restart: on-failure
+
+  nginx:
+    image: nginx
+    container_name: nginx-jenkins
+    depends_on:
+      - jenkins-blueocean
+    networks:
+      - jenkins
+    ports:
+      - "9000:80"
+    volumes:
+      - D:/dicoding-devops-menengah/nginx/nginx.conf:/etc/nginx/nginx.conf:ro  # Sesuaikan path ke drive D:
+    restart: always
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    networks:
+      - jenkins
+    ports:
+      - "9090:9090"
+    volumes:
+      - D:/dicoding-devops-menengah/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro  # Adjust path if needed
+    restart: unless-stopped
+  
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    networks:
+      - jenkins
+    depends_on:
+      - prometheus
+    environment:
+      - GF_SERVER_HTTP_PORT=3031
+    ports:
+      - "3031:3031"
+    restart: unless-stopped
+
+networks:
+  jenkins:
+    name: jenkins
+
+volumes:
+  jenkins-data:
+  jenkins-docker-certs:
