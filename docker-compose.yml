@@ -31,7 +31,7 @@ services:
       - DOCKER_CERT_PATH=/certs/client
       - JAVA_OPTS=-Dhudson.plugins.git.GitSCM.ALLOW_LOCAL_CHECKOUT=true
       - JENKINS_OPTS=--httpPort=8080 --prefix=/  # Pastikan prefix kosong
-      - JENKINS_JAVA_OPTIONS=-Djenkins.install.runSetupWizard=false -Djenkins.model.Jenkins.rootUrl=http://http://13.212.11.140:9000
+      - JENKINS_JAVA_OPTIONS=-Djenkins.install.runSetupWizard=false -Djenkins.model.Jenkins.rootUrl=http://13.212.11.140:9000 
     volumes:
       - jenkins-data:/var/jenkins_home
       - jenkins-docker-certs:/certs/client:ro
@@ -61,9 +61,10 @@ services:
     ports:
       - "9091:9091"
     command:
-      - "--web.listen-address=:9091"  # Make Prometheus listen on 9091
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--web.listen-address=:9091"
     volumes:
-       - /home/ubuntu/learning-devops/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro  # Absolute path
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
     restart: unless-stopped
   
   grafana:
