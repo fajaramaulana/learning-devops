@@ -19,7 +19,7 @@ scrape_configs:
   # Scrape Prometheus itself
   - job_name: "prometheus"
     static_configs:
-      - targets: ["0.0.0.0:9091"]
+      - targets: ["0.0.0.0:9090"]
 
   # Scrape Jenkins metrics
   - job_name: "jenkins"

@@ -59,7 +59,7 @@ services:
     networks:
       - jenkins
     ports:
-      - "9091:9091"
+      - "9090:9090"
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro  # Adjust path if needed
     restart: unless-stopped
