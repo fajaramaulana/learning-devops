@@ -56,7 +56,7 @@ services:
   prometheus:
     image: prom/prometheus
     container_name: prometheus
-    netwo   rks:
+    networks:
       - jenkins
     ports:
       - "9091:9091"
