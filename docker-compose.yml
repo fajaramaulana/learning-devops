@@ -59,7 +59,9 @@ services:
     networks:
       - jenkins
     ports:
-      - "9090:9090"
+      - "9091:9091"
+    command:
+      - "--web.listen-address=:9091"  # Make Prometheus listen on 9091
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro  # Adjust path if needed
     restart: unless-stopped
