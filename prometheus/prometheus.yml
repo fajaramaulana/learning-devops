@@ -23,6 +23,6 @@ scrape_configs:
 
   # Scrape Jenkins metrics
   - job_name: "jenkins"
-    metrics_path: "/prometheus"    
+    metrics_path: "/prom"
     static_configs:
       - targets: ["jenkins-blueocean:8080"]  # Jenkins service inside Docker network

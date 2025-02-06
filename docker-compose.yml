@@ -50,7 +50,7 @@ services:
     ports:
       - "9000:80"
     volumes:
-      - D:/dicoding-devops-menengah/nginx/nginx.conf:/etc/nginx/nginx.conf:ro  # Sesuaikan path ke drive D:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro  # Sesuaikan path ke drive D:
     restart: always
 
   prometheus:
@@ -61,7 +61,7 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - D:/dicoding-devops-menengah/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro  # Adjust path if needed
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro  # Adjust path if needed
     restart: unless-stopped
   
   grafana:
