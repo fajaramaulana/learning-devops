@@ -56,14 +56,14 @@ services:
   prometheus:
     image: prom/prometheus
     container_name: prometheus
-    networks:
+    netwo   rks:
       - jenkins
     ports:
       - "9091:9091"
     command:
       - "--web.listen-address=:9091"  # Make Prometheus listen on 9091
     volumes:
-      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro  # Adjust path if needed
+       - /home/ubuntu/learning-devops/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro  # Absolute path
     restart: unless-stopped
   
   grafana:
