@@ -44,18 +44,18 @@ services:
   #         memory: 512M
   #   restart: on-failure
 
-  nginx:
-    image: nginx
-    container_name: nginx-jenkins
-    depends_on:
-      - jenkins-blueocean
-    networks:
-      - jenkins
-    ports:
-      - "9000:80"
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-    restart: always
+  # nginx:
+  #   image: nginx
+  #   container_name: nginx-jenkins
+  #   depends_on:
+  #     - jenkins-blueocean
+  #   networks:
+  #     - jenkins
+  #   ports:
+  #     - "9000:80"
+  #   volumes:
+  #     - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+  #   restart: always
 
   prometheus:
     image: prom/prometheus
