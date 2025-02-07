@@ -17,4 +17,4 @@ scrape_configs:
   - job_name: "jenkins"
     metrics_path: "/prom/"  # Corrected path
     static_configs:
-      - targets: ["47.128.151.22:9000"]  # Jenkins public IP with correct port
+      - targets: ["13.250.54.79:9000"]  # Jenkins public IP with correct port
