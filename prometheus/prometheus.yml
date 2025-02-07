@@ -12,9 +12,9 @@ rule_files: []
 scrape_configs:
   - job_name: "prometheus"
     static_configs:
-      - targets: ["prometheus:9091"]
+      - targets: ["localhost:9091"]  # Prometheus itself
 
   - job_name: "jenkins"
-    metrics_path: "/prom"
+    metrics_path: "/prom/"  # Corrected path
     static_configs:
-      - targets: ["jenkins-blueocean:8080"]
+      - targets: ["47.128.151.22:9000"]  # Jenkins public IP with correct port
