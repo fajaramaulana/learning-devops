@@ -31,7 +31,7 @@ services:
       - DOCKER_CERT_PATH=/certs/client
       - JAVA_OPTS=-Dhudson.plugins.git.GitSCM.ALLOW_LOCAL_CHECKOUT=true
       - JENKINS_OPTS=--httpPort=8080 --prefix=/  # Pastikan prefix kosong
-      - JENKINS_JAVA_OPTIONS=-Djenkins.install.runSetupWizard=false -Djenkins.model.Jenkins.rootUrl=http://13.212.11.140:9000 
+      - JENKINS_JAVA_OPTIONS=-Djenkins.install.runSetupWizard=false -Djenkins.model.Jenkins.rootUrl=http://$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4):9000 
     volumes:
       - jenkins-data:/var/jenkins_home
       - jenkins-docker-certs:/certs/client:ro
