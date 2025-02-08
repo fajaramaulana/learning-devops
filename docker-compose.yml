@@ -12,7 +12,7 @@ services:
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
     restart: unless-stopped
-  
+
   grafana:
     image: grafana/grafana
     container_name: grafana
@@ -24,6 +24,20 @@ services:
       - GF_SERVER_HTTP_PORT=3031
     ports:
       - "3031:3031"
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    networks:
+      - jenkins
+    ports:
+      - "80:80"
+    volumes:
+      # Mount the host folder with your static files to the container's web root.
+      - /home/ubuntu/var/www/html:/usr/share/nginx/html:ro
+      # Mount your custom nginx.conf to override the default configuration.
+      - ./nginx/nginx-react.conf:/etc/nginx/nginx.conf:ro
     restart: unless-stopped
 
 networks:
